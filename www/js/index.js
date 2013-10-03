@@ -100,12 +100,18 @@ function onError(error) {
  * Initialize the maps and center on the phone's current location
  * 
  */
-function initMaps() {
+function init() {
     // Throw an error if no update is received every 3 seconds
     var options = { timeout: 3000 };
     centerOnMyLocation();
+    // clearOldSofas();
     getSofas();
     watchID = navigator.geolocation.watchPosition(placeMarker, onError, options);
+}
+
+function pause(){
+    clearOldSofas();
+    navigator.geolocation.clearWatch(watchID);
 }
 
 /**
@@ -124,6 +130,9 @@ function placeSofa(position) {
     saveSofa(position);
 }
 
+/**
+ * Drop a sofa onto the map
+ */
 function putSofaOnMap(position){
     var sofaLatlng = positionLatLng(position);
 
@@ -137,6 +146,19 @@ function putSofaOnMap(position){
     sofas.push(sofa);
 }
 
+/**
+ * Clear the sofas from the map
+ */
+function clearOldSofas() {
+  for (var i = 0; i < sofas.length; i++ ) {
+    sofas[i].setMap(null);
+  }
+  sofas = [];
+}
+
+/**
+ * Save a sofa to the database of sofas
+ */
 function saveSofa(position){
     console.log(position);
     jx.load(config.postTo+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
@@ -144,10 +166,16 @@ function saveSofa(position){
     }, 'text', 'post', onError);
 }
 
+/**
+ * Get sofas from the database of sofas
+ */
 function getSofas(){
     navigator.geolocation.getCurrentPosition(loadSofas, onError);
 }
 
+/**
+ * Actually load the sofas onto the map
+ */
 function loadSofas(position){
     jx.load(config.getFrom+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
         for (var sofa in data) {

@@ -8,6 +8,8 @@ c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-mdpi\icon.png \
 c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-mdpi\ic_launcher.png \
 c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-xhdpi\icon.png \
 c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-xhdpi\ic_launcher.png \
+c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-xxhdpi\icon.png \
+c:\xampp\htdocs\free-sofa\platforms\android\res\drawable-xxhdpi\ic_launcher.png \
 c:\xampp\htdocs\free-sofa\platforms\android\res\layout\main.xml \
 c:\xampp\htdocs\free-sofa\platforms\android\res\values\strings.xml \
 c:\xampp\htdocs\free-sofa\platforms\android\res\xml\config.xml \
@@ -20,6 +22,8 @@ c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-mdpi\icon.png \
 c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-mdpi\ic_launcher.png \
 c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-xhdpi\icon.png \
 c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-xhdpi\ic_launcher.png \
+c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-xxhdpi\icon.png \
+c:\xampp\htdocs\free-sofa\platforms\android\bin\res\drawable-xxhdpi\ic_launcher.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\config.xml \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\cordova.js \
@@ -38,6 +42,7 @@ c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\bitmap - Copy.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\logo.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\sofa.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\sofa.svg \
+c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\config.js \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\config.sample.js \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\index.js \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\jquery.min.js \
