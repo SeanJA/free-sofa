@@ -1,3 +1,0 @@
-# view AndroidManifest.xml #generated:13
--keep class com.seanja.freesofa.HelloWorld { <init>(...); }
-
