@@ -1,67 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <title>Free Sofa</title>
-         
-        <style type="text/css">
-          html, body, #map, .controls{
-            height: 100%;
-            margin: 0;
-            padding: 0;
-          }
-          body{
-            padding: 1px;
-          }
-          #map{
-            height: 90%;
-          }
-          .controls{
-            height: 10%;
-            text-align: center;
-          }
-          .button{
-            height: 100%;
-            display: inline-block;
-            font-size: 1.1em;
-            width: 31%;
-          }
-          /*.full-button{
-            width: 100%;
-          }
-          .half-button{
-            width: 49%;
-          }*/
-          .found{
-            /*width: 100%;*/
-          }
-        </style>
-        
         <script src="phonegap.js"></script>
-    </head>
-    <body>
-      <div class="controls">
-        <button class="half-button button following" onCLick="toggleFollow(this);">Following</button>
-        <button class="half-button button show-me" onClick="centerOnMyLocation();">Show Me</button>
-        <button class="full-button button found" onClick="foundSofa();">+Sofa</button>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Loading Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="controls">
+      <div class="btn-toolbar">
+      <div class="btn-group">
+        <a class="btn btn-primary active" onCLick="toggleFollow(this); return false;" href="#"><i class="glyphicon glyphicon-eye-open"></i></a>
+        <a class="btn btn-primary" onCLick="centerOnMyLocation(); return false;" href="#"><i class="glyphicon glyphicon-map-marker"></i></a>
+        <a class="btn btn-primary" onClick="foundSofa(); return false;" href="#"><i class="glyphicon glyphicon-plus"></i></a>
       </div>
-      <div id="map"></div>
- 
-         <!-- bring in the google maps library -->
-        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <script src="js/config.js"></script>
-        <script src="js/jx.js"></script>
-        <script src="js/index.js"></script>
-        <script>
-        // Options: throw an error if no update is received every 30 seconds.
-        //
-        //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-        document.addEventListener("deviceready", init, false);
-        document.addEventListener("pause", pause, false);
-        document.addEventListener("resume", init, false);
-        </script>
-        <!-- <div class="controls">
-          
-        </div> -->
-    </body>
+    </div>
+    <!-- 
+      <a href="#" onCLick="toggleFollow(this); return false;" class="button btn btn-large btn-primary">Following</a>
+      <a href="#" onCLick="centerOnMyLocation(); return false;" class="button btn btn-large">Following</a>
+      <button class="half-button button following" onCLick="toggleFollow(this);">Following</button>
+      <button class="half-button button show-me" onClick="centerOnMyLocation();">Show Me</button>
+      <button class="full-button button found" onClick="foundSofa();">+Sofa</button> -->
+    </div>
+    <div id="map"></div>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="js/config.js"></script>
+    <script src="js/jx.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+    // Options: throw an error if no update is received every 30 seconds.
+    //
+    //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+    document.addEventListener("deviceready", init, false);
+    document.addEventListener("pause", pause, false);
+    document.addEventListener("resume", init, false);
+    </script>
+  </body>
 </html>
