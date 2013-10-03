@@ -104,6 +104,7 @@ function initMaps() {
     // Throw an error if no update is received every 3 seconds
     var options = { timeout: 3000 };
     centerOnMyLocation();
+    getSofas();
     watchID = navigator.geolocation.watchPosition(placeMarker, onError, options);
 }
 
@@ -119,7 +120,11 @@ function foundSofa(){
  * @param position (a position object)
  */
 function placeSofa(position) {
+    putSofaOnMap(position);
+    saveSofa(position);
+}
 
+function putSofaOnMap(position){
     var sofaLatlng = positionLatLng(position);
 
     var sofa = new google.maps.Marker({
@@ -130,12 +135,31 @@ function placeSofa(position) {
         animation: google.maps.Animation.DROP
     });
     sofas.push(sofa);
-    saveSofa(position);
 }
 
 function saveSofa(position){
     console.log(position);
-    jx.load(config.postTo+'?key='+config.key+'&lat='+position.coords.latitude+'&lng='+position.coords.longitude,function(data){
-        alert(data); // Do what you want with the 'data' variable.
+    jx.load(config.postTo+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
+        
     }, 'text', 'post', onError);
+}
+
+function getSofas(){
+    navigator.geolocation.getCurrentPosition(loadSofas, onError);
+}
+
+function loadSofas(position){
+    jx.load(config.getFrom+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
+        for (var sofa in data) {
+            if (data.hasOwnProperty(sofa)) {
+                var temp = {
+                    'coords':{
+                        'latitude':data[sofa].latitude,
+                        'longitude':data[sofa].longitude,
+                    }
+                }
+                putSofaOnMap(temp);
+            }
+        }
+    }, 'json');
 }

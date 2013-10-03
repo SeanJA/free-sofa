@@ -37,6 +37,7 @@ c:\xampp\htdocs\free-sofa\platforms\android\assets\www\css\index.css \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\bitmap - Copy.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\logo.png \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\sofa.png \
+c:\xampp\htdocs\free-sofa\platforms\android\assets\www\img\sofa.svg \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\config.sample.js \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\index.js \
 c:\xampp\htdocs\free-sofa\platforms\android\assets\www\js\jquery.min.js \
