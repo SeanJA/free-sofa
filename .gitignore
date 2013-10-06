@@ -1,2 +1,3 @@
-platforms/
 server/config.php
+server/config.js
+platforms/*

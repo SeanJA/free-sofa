@@ -23,20 +23,20 @@ mapBox = document.getElementById("map");
 map = new google.maps.Map(mapBox, {
     center: new google.maps.LatLng(57, 21),
     zoom: 13,
-    mapTypeId: "OSM",
+    // mapTypeId: "OSM",
     mapTypeControl: false,
     streetViewControl: false
 });
 
 //Define OSM map type pointing at the OpenStreetMap tile server (is is possible to include all the tiles in the app?)
-map.mapTypes.set("OSM", new google.maps.ImageMapType({
-    getTileUrl: function(coord, zoom) {
-        return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-    },
-    tileSize: new google.maps.Size(256, 256),
-    name: "OpenStreetMap",
-    maxZoom: 15
-}));
+// map.mapTypes.set("OSM", new google.maps.ImageMapType({
+//     getTileUrl: function(coord, zoom) {
+//         return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+//     },
+//     tileSize: new google.maps.Size(256, 256),
+//     name: "OpenStreetMap",
+//     maxZoom: 15
+// }));
 
 /**
  * Whether or not to follow the user on the map
@@ -44,17 +44,13 @@ map.mapTypes.set("OSM", new google.maps.ImageMapType({
 function toggleFollow(ele){
     follow = !follow;
     if(follow){
-        ele.classList.add('active');
+        ele.innerHTML = "Following";
     } else {
-        ele.classList.remove('active');
+        ele.innerHTML = "Not Following";
     }
 }
 
-google.maps.event.addListener(map, 'dragend', function() {
-    if(follow){
-        toggleFollow();
-    }
-} );
+
 
 /**
  * Place the user marker
@@ -96,26 +92,19 @@ function centerOnMyLocation(){
  * Display the error message
  */
 function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
+    alert(error.toString());
 }
 
 /**
  * Initialize the maps and center on the phone's current location
  * 
  */
-function init() {
+function initMaps() {
     // Throw an error if no update is received every 3 seconds
     var options = { timeout: 3000 };
     centerOnMyLocation();
-    // clearOldSofas();
     getSofas();
     watchID = navigator.geolocation.watchPosition(placeMarker, onError, options);
-}
-
-function pause(){
-    clearOldSofas();
-    navigator.geolocation.clearWatch(watchID);
 }
 
 /**
@@ -130,16 +119,14 @@ function foundSofa(){
  * @param position (a position object)
  */
 function placeSofa(position) {
-    putSofaOnMap(position);
     saveSofa(position);
 }
 
 /**
- * Drop a sofa onto the map
+ * Put a sofa on the map
  */
 function putSofaOnMap(position){
     var sofaLatlng = positionLatLng(position);
-
     var sofa = new google.maps.Marker({
         position: sofaLatlng,
         map: map,
@@ -151,47 +138,37 @@ function putSofaOnMap(position){
 }
 
 /**
- * Clear the sofas from the map
- */
-function clearOldSofas() {
-  for (var i = 0; i < sofas.length; i++ ) {
-    sofas[i].setMap(null);
-  }
-  sofas = [];
-}
-
-/**
- * Save a sofa to the database of sofas
+ * Save the sofa back to the central location
  */
 function saveSofa(position){
-    console.log(position);
     jx.load(config.postTo+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
-        
+        putSofaOnMap(position);
     }, 'text', 'post', onError);
 }
 
-/**
- * Get sofas from the database of sofas
- */
 function getSofas(){
     navigator.geolocation.getCurrentPosition(loadSofas, onError);
 }
 
-/**
- * Actually load the sofas onto the map
- */
 function loadSofas(position){
     jx.load(config.getFrom+'?key='+config.key+'&latitude='+position.coords.latitude+'&longitude='+position.coords.longitude,function(data){
         for (var sofa in data) {
             if (data.hasOwnProperty(sofa)) {
-                var temp = {
-                    'coords':{
-                        'latitude':data[sofa].latitude,
-                        'longitude':data[sofa].longitude,
-                    }
-                }
+                var temp = coordsToPosition(data[sofa]);
                 putSofaOnMap(temp);
             }
         }
-    }, 'json');
+    }, 'json', 'get');
+}
+
+/**
+ * Convert a set of coordinates to a position object
+ */
+function coordsToPosition(data){
+    return {
+        'coords':{
+            'latitude':data.latitude,
+            'longitude':data.longitude,
+        }
+    }
 }

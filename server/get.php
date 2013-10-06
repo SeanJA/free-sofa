@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+require 'config.sample.php';
 
 if($_GET['key'] !== $config['key']){
 	header("HTTP/1.0 404 Not Found");
