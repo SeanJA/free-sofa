@@ -1,0 +1,10 @@
+<IfModule mod_headers.c>
+   Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+AddDefaultCharset utf-8
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresDefault                                      "access plus 1 day"
+</IfModule>
