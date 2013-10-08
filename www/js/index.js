@@ -28,34 +28,25 @@ map = new google.maps.Map(mapBox, {
     streetViewControl: false
 });
 
-//Define OSM map type pointing at the OpenStreetMap tile server (is is possible to include all the tiles in the app?)
-// map.mapTypes.set("OSM", new google.maps.ImageMapType({
-//     getTileUrl: function(coord, zoom) {
-//         return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-//     },
-//     tileSize: new google.maps.Size(256, 256),
-//     name: "OpenStreetMap",
-//     maxZoom: 15
-// }));
-
 /**
  * Whether or not to follow the user on the map
  */
-function toggleFollow(ele){
+function toggleFollow(){
+    var ele = document.getElementById('follow');
     follow = !follow;
     if(follow){
-        ele.innerHTML = "Following";
+        centerOnMyLocation();
+        ele.classList.add('active');
     } else {
-        ele.innerHTML = "Not Following";
+        ele.classList.remove('active');
     }
 }
-
-
 
 /**
  * Place the user marker
  */
 function placeMarker(position) {
+    // alert('place_marker');
     if(marker){
         marker.setMap(null);
     }
@@ -92,6 +83,7 @@ function centerOnMyLocation(){
  * Display the error message
  */
 function onError(error) {
+    //not sure what to do on error...
     alert(error.toString());
 }
 
@@ -99,12 +91,43 @@ function onError(error) {
  * Initialize the maps and center on the phone's current location
  * 
  */
-function initMaps() {
+function initApp() {
     // Throw an error if no update is received every 3 seconds
-    var options = { timeout: 3000 };
     centerOnMyLocation();
     getSofas();
-    watchID = navigator.geolocation.watchPosition(placeMarker, onError, options);
+    trackUser();
+    addMapEvents();
+    addDeviceEvents();
+    navigator.splashscreen.hide();
+}
+
+function addMapEvents(){
+    google.maps.event.addListener(map, 'drag', function() { 
+        if(follow){
+            toggleFollow();
+        }
+    });
+}
+
+function addDeviceEvents(){
+    document.addEventListener("pause", function(){
+        window.clearInterval(watchID);
+        watchID = null;
+    }, false);
+
+    document.addEventListener("resume", function(){
+        trackUser();
+    }, false);
+}
+
+/**
+ * Track the user's position
+ */
+function trackUser(){
+    var timeout = 3000;
+    watchID = window.setInterval(function(){
+        navigator.geolocation.getCurrentPosition(placeMarker, onError, timeout)
+    });
 }
 
 /**
