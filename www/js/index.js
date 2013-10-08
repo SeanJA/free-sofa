@@ -36,9 +36,20 @@ function toggleFollow(){
     follow = !follow;
     if(follow){
         centerOnMyLocation();
-        ele.classList.add('active');
+        ele.className += ' active';
     } else {
-        ele.classList.remove('active');
+        removeClass(ele, 'active');
+    }
+}
+
+function hasClass(ele,cls) {
+    return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+}
+
+function removeClass(ele,cls) {
+    if (hasClass(ele,cls)) {
+        var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+        ele.className=ele.className.replace(reg,' ');
     }
 }
 
@@ -92,16 +103,21 @@ function onError(error) {
  * 
  */
 function initApp() {
-    // Throw an error if no update is received every 3 seconds
     centerOnMyLocation();
     getSofas();
     trackUser();
     addMapEvents();
     addDeviceEvents();
-    navigator.splashscreen.hide();
+    if(navigator.splashscreen){
+        navigator.splashscreen.hide();
+    }
 }
 
+/**
+ * Add the map events
+ */
 function addMapEvents(){
+    //stop the following on drag
     google.maps.event.addListener(map, 'drag', function() { 
         if(follow){
             toggleFollow();
@@ -109,12 +125,16 @@ function addMapEvents(){
     });
 }
 
+/**
+ * Add the device events
+ */
 function addDeviceEvents(){
+    // pause the tracker on device pause
     document.addEventListener("pause", function(){
         window.clearInterval(watchID);
         watchID = null;
     }, false);
-
+    // resume the tracker on resume
     document.addEventListener("resume", function(){
         trackUser();
     }, false);
